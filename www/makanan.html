@@ -1,0 +1,66 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/ionic.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#insert").click(function() {
+            var kdmenu = $("#kdmenu").val();
+            var nmmenu = $("#nmmenu").val();
+            var harga = $("#harga").val();
+            var dataString = "kdmenu=" + kdmenu + "&nmmenu=" + nmmenu + "&harga=" + harga + "&insert=";
+            if ($.trim(kdmenu).length > 0 & $.trim(nmmenu).length > 0 & $.trim(harga).length > 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "https://007lolzzz.000webhostapp.com/cordova/www/insert.php",
+                    data: dataString,
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function() {
+                        $("#insert").val('Connecting...');
+                    },
+                    success: function(data) {
+                        if (data == "success") {
+                            alert("inserted");
+                            $("#insert").val('submit');
+                        } else if (data == "error") {
+                            alert("error");
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div class="bar bar-header bar-positive" style="margin-bottom:60px;">
+        <h1 class="kdmenu">Input Menu Makanan</h1>
+        <center><a class="button button-clear" href="readjson.html">Show Data</a></center>
+    </div>
+    <br/>
+    <br/>
+    <div class="list">
+        <input type="hidden" id="id" value="" />
+        <div class="item">
+            <label>Kode Menu</label>
+            <input type="text" id="kdmenu" value="" />
+        </div>
+        <div class="item">
+            <label>Nama Menu</label>
+            <input type="text" id="nmmenu" value="" />
+        </div>
+        <div class="item">
+            <label>Harga</label>
+            <input type="text" id="harga" value="" />
+        </div>
+        <div class="item">
+            <input type="button" id="insert" class="button button-block" value="Insert" />
+        </div>
+    </div>
+</body>
+
+</html>
